@@ -64,13 +64,18 @@ do
 
     % M step: parameter update
 	printf("a1")
-    pkGc=sum(zk)/Nc;
+    pkGc{ic}=sum(zk)/Nc;
 	printf("a2")
-    mu{ic}=sum((zk'*Xc)')./sum(zk);
+    muc=Xc'*zk./sum(zk);
+    size(muc)
+    mu{ic}=muc;
+
 	printf("a3")
     for k=1:K
-		aux=sum((zk'*(Xc-mu{ic}(:,k))*(Xc-mu{ic}(:,k))')')./sum(zk);
-        sigma{ic,k}=aux;
+%		aux=(zk(:,k).*(Xc-mu{ic}(:,k)'))'*(Xc-mu{ic}(:,k)')/sum(zk(:,k));
+        aux=(zk(:,k).*(Xc-muc(:,k)'))'*(Xc-muc(:,k)')/sum(zk(:,k));
+        size(aux)
+        sigma(ic,k)=aux;
 	end
     
     % HERE YOUR CODE FOR PARAMETER ESTIMATION

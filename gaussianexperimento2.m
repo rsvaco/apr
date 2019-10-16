@@ -34,7 +34,7 @@ Wte=Wp(:,1:k)' * (Y-m)';
 
 
 
-err=mixgaussiani(Wtr',xl,Wte',yl, 1,alpha)
+err=mixgaussiani(Wtr',xl,Wte',yl, 2,alpha)
 printf("%d\t%d\t%d\n", alpha, k, err)
 
 endfor
