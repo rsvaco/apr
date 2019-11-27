@@ -2,7 +2,7 @@
 
 
 
-
+###1) extraer los datos de las clases 0 a 3;
 load("data/mnist/mnisttr.mat.gz");
 load("data/mnist/mnisttrlabels.mat.gz");
 
@@ -11,6 +11,7 @@ disp("Datos cargados")
 datos = X(xl < 4, :);
 labels = xl(xl < 4, :);
 
+###2) separar un conjunto de entrenamiento y otro de test;
 rand("seed",23);
 [N, columnas] = size(datos);
 perm = randperm(N);
@@ -26,11 +27,15 @@ trlabels = labels(1:Ntrain, :);
 te = datos(Ntrain+1:N, :);
 telabels = labels(Ntrain+1:N,:);
 
+
+###3) implementar (en octave) un clasificador de 4 clases mediante
+###el método por votación (Transparencias 4.32 a 4.39) utilizando 
+###clasificadores de dos clases (libsvm);
 for i = 0:3
 	for j = i+1:3
 		#i vs j
-        indicesi = find(trlabels == i);
-        indicesj = find(trlabels == j);
+    indicesi = find(trlabels == i);
+    indicesj = find(trlabels == j);
         
 		datos = tr([indicesi; indicesj], :);
         
@@ -76,7 +81,9 @@ porcentajeAciertosVOT = aciertosVOT/rows(telabels)
 
 
 
-
+###4) implementar (en octave) un clasificador de 4 clases mediante
+###el método DAG (Transparencia 4.40 y 4.41 y Ejercicio 10 del tema
+###4 en el boletín de ejercicios);
 for i = 1:rows(telabels)
 	minimo = 0;
 	maximo = 3;
